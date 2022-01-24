@@ -1,0 +1,8 @@
+<script type="text/javascript">
+var url=new URL(window.location.href),c=url.searchParams.get("url");
+function convert(t){
+  t=t.replaceAll(/http\:\/\/|https\:\/\//gi,"")
+  .replaceAll(/lstv\.ml|lstv\.gq/gi,"ml");
+  t="https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/"+t;return t}
+document.write(convert(c));
+</script>

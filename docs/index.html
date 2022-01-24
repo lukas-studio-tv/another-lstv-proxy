@@ -1,4 +1,72 @@
-<h1>The LSTV browser</h1>
-Please hold up, im making the browser and collecting the original URLs to make this work.
-<br>
-Should be done in a few minutes, trust me!
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>LSTV temporary backup</title>
+  </head>
+  <body>
+    <h1>Enter original url</h1>
+    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Original LSTV URL, like https://lstv.ml/"><br>
+    <input disabled type="text" class="form-control" id="output-url" aria-describedby="basic-addon3" placeholder="Temporary URL will be outputed here">
+    <button onclick="convert();copy(c);" class="btn btn-primary d" type="button">Copy <i class="bi bi-clipboard"></i></button>
+    <button onclick="convert();openInNewTab(o.value)" class="btn btn-primary d" type="button">Open <i class="bi bi-arrow-up-right-square"></i></button><br><br>
+    <button onclick="convert()" class="btn btn-primary f" type="button">Convert</button>
+    <div class="cp">
+      ...
+    </div>
+    <style media="screen">
+      body{
+        text-align:center;
+        padding:100px 130px;
+      }
+      button.f{width:100%}
+      button.d{width:49%}
+      .cp{opacity:0}
+    </style>
+    <script type="text/javascript">
+      var i=document.querySelector("#basic-url");
+      var o=document.querySelector("#output-url");
+      var c=document.querySelector(".cp");
+      function convert(){
+        o.value=i.value;
+        o.value=o.value.replaceAll(/http\:\/\/|https\:\/\//gi,"");
+        o.value=o.value.replaceAll(/lstv\.ml|lstv\.gq/gi,"ml");
+        o.value="https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/"+o.value;
+        c.innerHTML=o.value;
+      }
+      function openInNewTab(href){Object.assign(document.createElement('a'),{target:'_blank',href:href,}).click();}
+      function copy(element){var $temp=$("<input>");$("body").append($temp);$temp.val($(element).html()).select();document.execCommand("copy");$temp.remove()
+        var toastLiveExample = document.getElementById('liveToast');
+        var toast = new bootstrap.Toast(toastLiveExample);
+        toast.show();}
+    </script>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Copied to clipboard
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    </div>
+    <br><br>
+    <h3>Why?</h3>
+    We have some problems with our DNS and webhost.<br>
+    Previously thre were Cloudflare issues so we have made lstv.gq (Parked onto lstv.ml, but didn't use Cloudflare.)<br>
+    Sadly, that also broke with NXDOMAIN (Not a domain registration issue- its a problem on the hosting side)<br>
+    We are working on it and looking for a fix, but until then, we have made this.<br>
+    Its a temporary bridge to our webserver, but its read only (Content wont be synced anc cant be uploaded).<br>
+    So it can be used to read content and existing API things to fix the worst, but you can't create anything new.<br><br>
+    This page can convert from original LSTV url to this temporary read-only one.
+    <br>(Not everything is accessible tho.)<br>
+    <b>API: </b><i>https://lukas-studio-tv.github.io/another-lstv-proxy/api.php?url=...</i><br>
+    Returns the converted URL, same as this. May be used with RequestNetwork.<br><br><br>
+    THIS SHOULD NOT BE USED TO BROWSE WEBPAGES THO, AS LINKS WILL STILL REDIRECT TO THE BROKEN DOMAIN.
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>
