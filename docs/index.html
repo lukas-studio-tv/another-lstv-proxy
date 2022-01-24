@@ -33,8 +33,11 @@
       var c=document.querySelector(".cp");
       function convert(){
         o.value=i.value;
-        o.value=o.value.replaceAll(/http\:\/\/|https\:\/\//gi,"");
-        o.value=o.value.replaceAll(/lstv\.ml|lstv\.gq/gi,"ml");
+        o.value=o.value.replaceAll(/http\:\/\/|https\:\/\//gi,"")
+        .replaceAll(/ps\.lstv\.ml|pstudio\.ga/gi,"ps")
+        .replaceAll(/\/cdn\/dock/gi,"/cdn/dock-snapshot-12422")
+        .replaceAll(/\/dock-snapshot-12422\/uploads/gi,"/dock-snapshot-12422/uploaded-raw-content")
+        .replaceAll(/lstv\.ml|lstv\.gq/gi,"ml");
         o.value="https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/"+o.value;
         c.innerHTML=o.value;
       }
@@ -64,7 +67,7 @@
     So it can be used to read content and existing API things to fix the worst, but you can't create anything new.<br><br>
     This page can convert from original LSTV url to this temporary read-only one.
     <br>(Not everything is accessible tho.)<br>
-    <b>API: </b><i>https://lukas-studio-tv.github.io/another-lstv-proxy/api.php?url=...</i><br>
+    <b>API: </b><i>https://lukas-studio-tv.github.io/another-lstv-proxy/api.html?url=...</i> (Non-PHP yet)<br>
     Returns the converted URL, same as this. May be used with RequestNetwork.<br><br><br>
     THIS SHOULD NOT BE USED TO BROWSE WEBPAGES THO, AS LINKS WILL STILL REDIRECT TO THE BROKEN DOMAIN.
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
