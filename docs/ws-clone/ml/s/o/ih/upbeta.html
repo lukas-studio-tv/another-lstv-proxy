@@ -1,0 +1,29 @@
+            
+<script src="https://s3-eu-west-1.amazonaws.com/boostera.assets/1.0.2/boostera.umd.1.0.2.js"></script>
+<script>
+  let user_id="user";
+  let rand_id=Math.random().toString(36).substring(2,10);
+  const options = {
+   apiKey: "iVMVDQq5AzhzRbwYdTal", 
+   style: {"widget_options":{"theme":"custom","size":"small"},"custom_widget_color_theme":{"backgroundColor":"#fff","button":{"borderColor":"#1c2067","backgroundColor":"#1c2067","hover":"#ccc","textColor":"#fff"},"stipledFrameColor":"#419bf9"}}, 
+   element: "boostera-widget", 
+   uploadFinishedCallback: (info) => {
+      //This callback function will be called when the upload is finished.
+      //The info object contains information about the uploaded files.
+      rand_id=Math.random().toString(36).substring(2,10);
+      console.log(info);
+    }, 
+   fileSelectedCallback: (file, file_info) => {
+      //Inside the file_info.file_message you can add additional infomation to each uploaded file. 
+      //If you have any user identifiers you can also add them here
+      //The info added here will be delivered to email/webhook depending on your selected choices 
+     file_info.file_message = `Anonymus uploaded a file.`
+     file_info.target_folder = `uploads/`;
+     file_info.target_filename = file.name
+     file_info.extra={"key": "value"}
+     console.log("file_info was set to " + file_info);
+   }
+  }
+ const boostera = BoosteraUploadWidget(options);
+ </script>
+ <div id="boostera-widget"></div>

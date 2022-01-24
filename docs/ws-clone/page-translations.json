@@ -1,7 +1,7 @@
 {
-  "lstv.ml":"/htdocs/",
+  "lstv.ml":"/ml/",
   "api|cdn|yt|*.lstv.*":"/$&.lstv.ml/htdocs/",
-  "lstv.gq":"/htdocs/",
+  "lstv.gq":"/ml/",
   "extragon.ga":"extragon.is-best.net/htdocs/",
   "buffalodc.ga":""
 }

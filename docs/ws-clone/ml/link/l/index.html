@@ -1,0 +1,17 @@
+<script>
+location.reload();
+var url_string = window.location.href;
+var url = new URL(url_string);
+var c = url.searchParams.get("u");
+var protocol;
+if (c.includes("-ssl")) {
+    protocol = "https://";
+} else {
+if (c.includes("-js")) {
+    protocol = "javascript:";
+} else {
+    protocol = "http://";
+}
+}
+window.location.replace(protocol+c.replace("https://", "").replace("http://", "").replace("gcdn", "firebasestorage.googleapis.com/v0/b/").replace("mw2", "totalarchivestorage.appspot.com/o/").replace("-ssl", "").replace("-download", "?alt=media").replace("map", "world-upoad-").replace("-js", "").replace("-phttp", "http://"));
+</script>

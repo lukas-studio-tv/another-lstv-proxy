@@ -1,0 +1,66 @@
+<link rel="preconnect" href="https://fonts.gstatic.com"><link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><div class="fix"><input id="cmd"><button onclick="send();" class="gt" id="gt">▼</button></div>
+<div id="hl">[LSTV] Loading console.js from nodecraft.ga/d/cdn/cjs/V2.js
+  *g> Server running on Ubuntu 16.1 serverg*
+  *g> Instance of console created in 0.002sg*</div><style id="css">
+#hl{outline:none;color:#fff;white-space: pre-line;font-family:'Roboto Mono',monospace;z-index:2,user-select:auto;z-index:1}
+body{background:#22262e;color:white;font-family:'Roboto Mono',monospace;padding-bottom:84px;}
+button{border:none;border-radius:10px;color:white;background:#1d2024;outline:none;font-family:'Roboto Mono',monospace;padding:10px;height:50px;cursor:pointer;}
+input{border:none;border-radius:10px;color:white;background:#1d2024;outline:none;font-family:'Roboto Mono',monospace;padding:0px;padding-left:10px;padding-right:10px;height:50px;width:87%;}
+.gt{color:#0cf571;transform:rotate(270deg);width:49px;}
+.fix{position:fixed;background:#15171c;width:100%;bottom:0px;left:0px;padding:13px;z-index:99;}
+#oBar{position:fixed;background:#15171c;padding:13px;bottom:50%;left:30%;border-radius:10px;display:none;}
+#output{resize:none;border:none;border-radius:10px;color:white;background:#1d2024;outline:none;font-family:'Roboto Mono',monospace;font-size:1px;width:95%;overflow:hidden;height:80px;}
+#textINP{outline:none;width:90%;}</style>
+<script>
+var editor,text;
+shellText="/yanonymous@lstv | >/y ";
+log(shellText);
+const source=el('#hl');
+$('#cmd').keypress(function(e) {
+if(e.key=="Enter"){send();}});
+function send(){
+    source.innerHTML=source.innerHTML+el("#cmd").value;
+    var cmd=el("#cmd").value,u={};u.is=function(w){return w.split(/(\s+)/).filter(e=>e.trim().length>0).includes(cmd[0])}
+    el("#cmd").value="";var resp;cmd=cmd.split(/(\s+)/).filter(e=>e.trim().length>0)
+    if(false){}/*ignore*/
+    /*Commands:*/
+    /*syntax: 
+        else if(u.is("command alias alias2 ...")){...}
+    */
+    else if(u.is("clear cls")){el("#hl").innerHTML="*gConsole clearedg*"}
+    else if(u.is("cloud cl")){if(cmd[1]==null){log("Usage: cloud (command) (subcommand) (data) (arguments...)")}else{if(cmd[1]=="cdn"){if(cmd[2]==null){log("Usage: cloud cdn (subcommand) (data) (arguments...)")}else{if(cmd[3]==null){log("Usage: cloud cdn upload (source) (arguments...)")}else{log("[CLOUD] Connecting to 0.0.0.0:8080/cdn/dock/");sleep(1000);log("[CLOUD] API Submitting file..");sleep(300);log("Upload action sucessfull in 300ms, result URL:")}}}else{log("Invalid command '"+cmd[1]+"' for cloud")}}}
+    else if(u.is("help")){log("[ Help ]\n*gStill not fully updatedg*\n\nCommand list:\n&nbsp;&nbsp;*g- clear/cls (Clears the screen)g*\n&nbsp;&nbsp;*g- cloud/cl (Cloud command)g*\n&nbsp;&nbsp;*g- time (Current time)g*\n&nbsp;&nbsp;*g- fetch (fetch an url)g*\n&nbsp;&nbsp;*g- pkgi (Install more console commands from url)g*")}
+    
+    /*Error*/
+    else{log('*r>r* Unknown command "'+cmd[0]+'"')}
+    log(shellText);highlight(el("#hl"));scroll(0,6000*6000);
+}
+function log(t){el("#hl").innerHTML=el("#hl").innerHTML+"\n"+t}
+function sleep(ms){const date=Date.now();let currentDate=null;do{currentDate=Date.now();}while(currentDate-date<ms);}
+function bhl(r,o){return"<span style='color:"+r+";background:"+o+";border-radius:10px;'>$&</span>"}
+function el(e){return document.querySelector(e)}
+function stripHtml(t){let tmp=document.createElement("DIV");tmp.innerHTML=t;return tmp.textContent||tmp.innerText||"";}const _={};
+_.$=function(a,b){_.result=_.result.replaceAll(a,"<span style='color:"+b+"'>$&</span>")}
+
+_.m=function(a,b){var _a=_.result.match(a),_m;
+if(_a==null){console.info("null")}else{
+for(let i=0;i<_a.length;i++){
+_m=_a[i].match(b);_m=_m[0].replaceAll("[","").replaceAll("]","");_.result=_.result.replaceAll(_a[i],"<span style='color:"+_m+"'>$&</span>");_.r("*c["+_m+"]");_.r("c*");
+}}}
+
+_.r=function(a){_.result=_.result.replaceAll(a,"<span style='display:none'>$&</span>")}
+_.s=function(e){_.result=stripHtml(e.innerHTML);}
+_.e=function(e){e.innerHTML=_.result;}
+function highlight(el) {
+  _.s(el);
+  _.$(/LSTV|CLOUD/g,"#5a03fc");
+  _.$(/\"(.*?)\"/gi,"gray");
+  _.$(/\*g(.*?)g\*/gi,"gray");
+  _.$(/\*r(.*?)r\*/gi,"#e05555");
+  _.$(/\/y(.*?)\/y/gi,"#ffd608");
+  _.m(/\*c\[(.*?)\](.*?)c\*/gi,/(?=\[).*\]/gi);
+  _.r("/e");_.r("/y");_.r("*r");_.r("r*");_.r("*g");_.r("g*");
+  _.e(el);
+}
+highlight(el("#hl"));</script>

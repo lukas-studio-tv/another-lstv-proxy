@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<script src="docht.min.js?v=11"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+<textarea id="docht-edit" contenteditable="true" onfocusout="refresh();el('docht-edit').style.height='5px'" onfocus="el('docht-edit').style.height='300px'" oninput="refresh();">
+-hLSTVGaming APIs/-h
+We offer you -Bfree/-B APIs for your games to store
+#:all kinds of data and also synchronize them with the site!#:
+#:--h
+  1. Stats API [For leaderboards etc]/--h
+   This API is used primarily to create online leaderboards.#:
+   It has the option to sync with your game page (-a:https://lstv.ml/gaming/g/ovsu#stats:,Live example/-a)#:
+   (But you don't need to do that if you don't want of course)#:
+   Thanks to the fact that it can be controlled only with URL, it can be integrated#:
+   in almost every engine and language that exists.#:
+   Even Scratch.#:
+---h   Usage/---h
+      -B1. Read the stats:/-B#:#7
+          -a:https://lstv.ml/gaming/api/stats/?g=GAMEID:,{url:{c:gray,t:https://:}lstv.ml/gaming/api/stats/{c:lightblue,t:?g=GAMEID:}:}/-a#:#7
+          This returns a JSON with the stats and other.#:
+          Don't forget to change the GAMEID to the actual game ID of your game.#:
+          TIP: This API is by default public, so any source can get the JSON.#:
+          If you don't want that, you can lock it with the API key just like the /put/.#:
+          (But it makes things slower by few miliseconds)#:#5
+           -BOr returns one of these errors/-B:#:#2
+            1. {url:{c:red,t:error: you must specify the game id:}:}#:#7
+            2. {url:{c:red,t:error: this game id was not found:}:}#:#7#:
+      -B2. Write to the stats:/-B#:#7
+          -a:https://lstv.ml/gaming/api/stats/put/:,{url:{c:gray,t:https://:}lstv.ml/gaming/api/stats/put/{c:lightblue,t:?g=GAMEID&key=KEY&content=CONTENT:}:}/-a#:#7
+          If everything is set corectly, saves the content.#:
+          Set the key to your API key (Found in your game management>apis) to be able to use#:
+          this otherwise an error will be shown.#:#:¨
+          Also please note - this overwrites the entire file.#:
+          To just add an object to JSON, you can firstly get the content, add it, and right after upload it.#:#5
+           -BOr returns one of these errors/-B:#:#2
+            1. {url:{c:red,t:error: please specify what do you need to put...:}:}#:#7
+            2. {url:{c:red,t:error: invalid key.:}:}#:#7
+            3. {url:{c:red,t:error: no key provided. you can't do that.:}:}#:#7
+            4. {url:{c:red,t:error: this game id was not found:}:}#:#7
+            5. {url:{c:red,t:error: you must specify the game id:}:}#:#7
+</textarea><div id="docht"></div><style>textarea{display: none;background:#192026;color:white;outline:none;border:none;border-radius:5px;padding:8px;width:100%;height:300px;resize:none;transition-duration:0.2s;font-family:'Noto Sans',sans-serif;}body{font-family:'Noto Sans',sans-serif;}a{text-decoration:none;}
+.block-url{padding:3px;margin:3px;background:#192026;color:white;border-radius:5px;font-size:8px;}
+</style><div id="docht-setup"></div>
+<script>
+dochtSetup("docht-setup");
+refresh();
+function refresh(){dochtRender(document.getElementById("docht"), document.getElementById("docht-edit").value);}
+function el(id){return document.getElementById(id);}
+</script>

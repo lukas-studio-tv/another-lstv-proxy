@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.min.css" rel="stylesheet"/>
+  </head>
+  
+<body style="font-size:20px;font-family:Oregano;">
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.min.js"></script>
+  <script language="javascript">
+      $(function() {
+          toastr.options = {
+             "closeButton": true,
+             "debug": false,
+             "positionClass": "toast-bottom-right",
+             "showDuration": "300",
+             "hideDuration": "1000",
+             "timeOut": "0",
+             "extendedTimeOut": "1000",
+             "showEasing": "swing",
+             "hideEasing": "linear",
+             "showMethod": "fadeIn",
+             "hideMethod": "fadeOut"
+          }
+    toastr.info("<p'>We use cookies to store Your name. We do NOT use them to collect your personal information or anything.</p>");
+      });
+  </script>
+</body>
+</html>

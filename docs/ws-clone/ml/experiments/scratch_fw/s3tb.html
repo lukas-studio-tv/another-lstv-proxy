@@ -1,0 +1,118 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
+    <script src="https://lstv.ml/cdn/static/js/l/scratchfw_rsfw/0.1/min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <title>Scartch3Text</title>
+
+<script>/*demo*/scratchOpenProject('{"targets":[{"isStage":true,"name":"Stage","variables":{"k)hbP/C%x0(15i8~ZdEc":["abcd",44403]},"lists":{},"broadcasts":{},"blocks":{},"comments":{},"currentCostume":0,"costumes":[{"assetId":"cd21514d0531fdffb22204e0ec5ed84a","name":"backdrop1","md5ext":"cd21514d0531fdffb22204e0ec5ed84a.svg","dataFormat":"svg","rotationCenterX":240,"rotationCenterY":180}],"sounds":[],"volume":100,"layerOrder":0,"tempo":60,"videoTransparency":50,"videoState":"on","textToSpeechLanguage":null},{"isStage":false,"name":"Postava1","variables":{},"lists":{},"broadcasts":{},"blocks":{},"comments":{},"currentCostume":0,"costumes":[{"assetId":"3339a2953a3bf62bb80e54ff575dbced","name":"kostým1","bitmapResolution":1,"md5ext":"3339a2953a3bf62bb80e54ff575dbced.svg","dataFormat":"svg","rotationCenterX":0,"rotationCenterY":0}],"sounds":[{"assetId":"83a9787d4cb6f3b7632b4ddfebf74367","name":"prask","dataFormat":"wav","format":"","rate":48000,"sampleCount":1123,"md5ext":"83a9787d4cb6f3b7632b4ddfebf74367.wav"}],"volume":100,"layerOrder":1,"visible":true,"x":0,"y":0,"size":100,"direction":90,"draggable":false,"rotationStyle":"all around"}],"monitors":[{"id":"k)hbP/C%x0(15i8~ZdEc","mode":"default","opcode":"data_variable","params":{"VARIABLE":"abcd"},"spriteName":null,"value":44403,"width":0,"height":0,"x":5,"y":5,"visible":true,"sliderMin":0,"sliderMax":100,"isDiscrete":true}],"extensions":[],"meta":{"semver":"3.0.0","vm":"0.2.0-prerelease.20211110140254","agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.34"}}')
+    var editor;
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' }});
+    require(["vs/editor/editor.main"], () => {
+    monaco.editor.defineTheme('scratch', {
+	base: 'vs-dark',
+	inherit: true,
+	rules: [
+        { token: 'comment', foreground: '666666'},
+		{ token: 'comment.js', foreground: '666666'},
+		{ token: 'comment.css', foreground: '666666' }
+	],
+	colors: {
+        'editor.background': '#273552'
+	}
+    });
+    editor = monaco.editor.create(document.getElementById('main'), {
+        value: scratchProjectOutputFormatted(),
+        language: 'json',
+        theme: 'scratch',
+    });
+    });
+    $(window).resize(function(){
+        editor.layout();
+    });
+    function tabselect(what){document.getElementById("b_selected").id="b_unselected";what.id="b_selected";}
+    function el(id){return document.getElementById(id);}
+    function reloadSprites(){
+        var e_s_l_id="";
+        
+        el("sprites_m").innerHTML="";
+        for(var i = 0; i < Object.keys(scratchProject.targets).length; i++) {
+        if(i=scratchCurrentSpriteLocation){e_s_l_id=" e_s_l_selected"}else{e_s_l_id=""}
+        var obj = scratchProject.targets[i];
+        el("sprites_m").innerHTML=el("sprites_m").innerHTML+"<span class='sprites_m_item"+e_s_l_id+"'><span style='color:#aaa;'>"+i+". </span>"+obj.name+"</span>";
+        }
+    }
+</script>
+</head>
+
+
+<!-- Next: body -->
+
+
+<body>
+<!-- Style -->
+<style>
+body,html{padding:0px;margin:0px;}
+body{overflow:hidden;padding:0px;padding-top:35px;color:#fff;font-family:Montserrat;background:#282828;}
+h1{padding:0px;margin:0px;font-weight:800;}
+button{border:none;font-family:Montserrat;color:#FFF;border-radius:10px;padding:7px;background:#5393f4;cursor:pointer;margin-bottom:5px;font-weight:700;}
+.header{z-index:10;user-select:none;position:fixed;left:0px;top:0px;right:0px;background:#2f4066;height:20px;padding:8px;}
+::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-track{background:#444;border-radius:90px;}::-webkit-scrollbar-thumb{background:#666;border-radius:90px;}::-webkit-scrollbar-thumb:hover{background:#555;}
+.dropdown-content {background:#2f4066;display:none;position:absolute;min-width:200px;z-index:5;text-align:left;top:35px;border-radius:0px 0px 10px 10px;border:1px solid #283657;overflow:hidden;font-size:5px;
+-webkit-box-shadow: 0px 18px 36px -9px rgba(0,0,0,0.61); 
+box-shadow: 0px 18px 36px -9px rgba(0,0,0,0.61);}
+.dropdown-content a {padding:10px 14px;text-decoration:none;display:block;}
+.dropdown-content a:hover {background:rgba(0,0,0,0.1);}
+.dropdown:hover .dropdown-content {display:block;}
+.divide{position:absolute;left:0px;right:0px;display:block;height:1px;background:#283657;}
+.category{position:relative;top:-5px;bottom:0px;padding:10px;}
+.category:hover{background:rgba(0,0,0,0.1);cursor:pointer;}
+.bar{overflow:hidden;user-select:none;width:100%;background:#051638;padding-top:10px;}
+.bar_item{border-radius:10px 10px 0px 0px;background:#2f4066;border:1px solid #283657;display:inline-block;padding:7px;cursor:pointer;}
+.bar_item:hover{background:#051638;}
+#b_selected {margin-bottom:-3px;padding:10px;color:#4d97ff;}
+#b_selected:hover {background:#2f4066;cursor:auto;}
+.blockbar{overflow:hidden;position:absolute;bottom:0px;left:0px;width:60px;top:78px;background:#2f4066;}
+.spritebar{position:absolute;bottom:0px;right:0px;width:280px;top:78px;background:#2f4066;}
+.blockbar_item{position:absolute;width:100%;text-align:center;height:50px;padding:10px;}
+.blockbar_item:hover{color:#4d97ff;}
+.bb_i_c{display:block;border-radius:400px;width:30px;height:30px;}
+#main{border-radius:0px 15px 0px 15px;}
+.sprites_m_item{padding:5px;width:100%;display:block;cursor:pointer;}
+.sprites_m_item:hover{background:rgba(0,0,0,0.1);}
+h1, h2, h3, h4 {padding:0px;margin:0px;}
+.e_s_l_selected {background:rgba(0,0,0,0.2);}
+</style>
+
+<!-- Res Bar -->
+<div class="bar">
+    <span class="bar_item" id="b_selected" onclick="tabselect(this);reloadSprites()">Scripts</span><span class="bar_item" onclick="tabselect(this)">RS Code</span><span class="bar_item" onclick="tabselect(this)">Blocks JSON</span> &nbsp;
+    <span class="bar_item" onclick="tabselect(this)"><i class="fas fa-paint-brush"></i> Costumes</span><span class="bar_item" onclick="tabselect(this)"><i class="fas fa-music"></i> Sounds</span>
+</div>
+
+
+<!-- Editor --><div id="main" style="height:100%;margin-left:60;margin-right:290px;z-index:-5;"></div>
+<div class="blockbar">
+    <div class="blockbar_item"><div class="bb_i_c" style="background:#4c97ff;"></div><br>Motion</div>
+</div>
+<div class="spritebar">
+<h2 style="margin:5px;">Sprites</h2>
+<div id="sprites_m"></div>
+</div>
+
+<div class="header"><img src="logo.png" height="100%"> &nbsp;<span class="category dropdown">File<div class="dropdown-content">
+    <a onclick="savewdsp();openWindow('exportwin');">New blank template</a>
+    <span class="divide"></span>
+    <a onclick="newProject();">Paste JSON</a>
+    <span class="divide"></span>
+    <a onclick="newProject();">Open JSON from your computer</a>
+    <a onclick="openWindow('loadwin');">Save JSON to your computer</a>
+</div></span>
+<span class="category dropdown">Options<div class="dropdown-content"><a onclick="lm();">hi</a></div></span>
+<span class="category">Raw JSON Editor</span>
+</div><br>
+
+</body>

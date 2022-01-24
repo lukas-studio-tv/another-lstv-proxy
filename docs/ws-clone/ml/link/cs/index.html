@@ -1,0 +1,13 @@
+<script>
+location.reload();
+var url_string = window.location.href;
+var url = new URL(url_string);
+var c = url.searchParams.get("s");
+var protocol;
+if (c.includes("-ssl")) {
+    protocol = "https://";
+} else {
+    protocol = "http://";
+}
+window.location.replace(protocol+"www.google.com/search?q="+c.replace("-ssl", "")+"&ie=UTF-8");
+</script>

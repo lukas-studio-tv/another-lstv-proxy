@@ -1,0 +1,39 @@
+{
+  "software": [
+    {
+      "section": "audio",
+      "id": "1",
+      "name": "LocalStream",
+      "inf": "description",
+      "verzion": "1.27",
+      "buildn": "0",
+      "download": [
+        {
+          "name": "Release 1",
+          "id": "0",
+          "for": "android",
+          "dataurl": "cdn/1_test_0?g=0&v=1.0.12&id=11041612"
+        },
+        {
+          "name": "Rel 2",
+          "id": "1",
+          "for": "win",
+          "dataurl": "cdn/1_test_1?g=0&v=1.0.12&id=11041612"
+        }
+      ],
+      "social": [
+        {
+          "page-rating-1": "0",
+          "page-rating-2": "0",
+          "page-rating-3": "0",
+          "page-rating-4": "0",
+          "page-rating-5": "0",
+          "comments": [
+            {}
+          ],
+          "reports": "0"
+        }
+      ]
+    }
+  ]
+}

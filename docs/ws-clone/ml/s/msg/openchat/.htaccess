@@ -1,0 +1,2 @@
+
+redirectMatch 301 ^(.*)$ http://chat.lstv.ml/s/openchat/

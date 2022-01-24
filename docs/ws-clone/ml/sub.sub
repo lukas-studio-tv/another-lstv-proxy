@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>   
+    <body>
+        <title>BroW Search client - Search</title>
+<style>
+body{
+  background: #242424;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#p_a {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  display: flex;
+  margin: auto;
+  width: 50%;
+  color: #525252;
+}
+</style>
+<h1 id="p_a">Warning: If you was not redirected to results page, there is maybye an error or you clicked the back button.<br><br>Remember, the previous site ISNT search engine, but homepage redirect client for BroW (Mobile browser.) You cant use it without the app.</h1></p><br><a id="p_a" href="https://www.lstv.ml/s/b_scl/">Back to SC</a><br><br><br><br><br><br><br>
+
+</body>
+</html>

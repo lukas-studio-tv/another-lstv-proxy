@@ -1,0 +1,213 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+<div class="fix">
+<input id="cmd">
+<button onclick="LShighlight(); send();" class="gt" id="gt">▼</button>
+</div>
+<div style="white-space: pre-line" id="textINP" contenteditable="false">[LSTV] Loading docker on nodecraft.ga
+  > Server running on Linux core 4.03
+  > Installation of docker done in 0.002s
+  anonymous@lstcon.con | ></div>
+
+<div id="oBar" style="display: none;">
+Export: (Copy to LScript)<br><br>
+<textarea id="output">
+</textarea>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<style id="css">
+body {
+  background: #22262e;
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+  padding-bottom: 84px;
+}
+button {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #1d2024;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  padding: 10px;
+  height: 50px;
+  cursor: pointer;
+}
+input {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #1d2024;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 50px;
+  width: 87%;
+}
+.gt {
+  color: #0cf571;
+  transform: rotate(270deg);
+  width: 49px;
+}
+.fix {
+  position: fixed;
+  background: #15171c;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  padding: 13px;
+  z-index: 99;
+}
+#oBar {
+    position: fixed;
+  background: #15171c;
+  padding: 13px;
+  bottom: 50%;
+  left: 30%;
+  border-radius: 10px;
+  display: none;
+}
+#output {
+  resize: none;
+    border: none;
+  border-radius: 10px;
+  color: white;
+  background: #1d2024;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1px;
+  width: 95%;
+  overflow: hidden;
+  height: 80px;
+}
+
+#textINP {
+  outline: none;
+  width: 90%;
+}
+</style>
+<script>
+    var editor;
+var text;
+LShighlight();
+
+function LShighlight() {
+  editor = document.getElementById("edit");
+  text = document.getElementById("textINP").innerHTML;
+  text = text.replaceAll("\n", "//tempLineBreak//");
+  text = text.replaceAll("<br>", "//tempLineBreak//");
+  text = text.replaceAll(">", "//tempRQ//");
+  text = text.replaceAll("<", "//tempLQ//");
+  text = stripHtml(text);
+  text = text.replaceAll("//tempLineBreak//", "<br>");
+  text = text.replaceAll("//tempRQ//", ">");
+  text = text.replaceAll("//tempLQ//", "<");
+  text = text.replaceAll("{ CloudENV }", "<span style='color: #ffd608;'>{ CloudENV }</span>");
+  text = text.replaceAll(/LSTV|goat/gi, "<span style='color: #5a03fc;'>LSTV</span>");
+  text = text.replaceAll("anonymous@lstcon.con | >", "<span style='color: #ffd608;'>anonymous@lstcon.con | > </span>");
+  text = text.replaceAll("> Server running on Linux core 4.03", "<span style='color: #9c9c9c;'>> Server running on Linux core 4.03</span>");
+  text = text.replaceAll("> Installation of docker done in 0.002s", "<span style='color: #9c9c9c;'>> Installation of docker done in 0.002s</span>");
+  text = text.replaceAll("> Unknown", "<span style='color: #e05555;'>></span> Unknown");
+  text = text.replaceAll("[=  Help:  =]", "<span style='color: #38cf3d;'>[=  Help:  =]</span>");
+  document.getElementById("textINP").innerHTML = text;
+}
+
+const source = document.getElementById('textINP');
+
+const inputHandler = function(e) {}
+
+source.addEventListener('input', inputHandler);
+source.addEventListener('propertychange', inputHandler);
+
+function stripHtml(html) {
+  let tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+}
+
+function getPos(el) {
+  var val = el.innerHTML;
+  return val.slice(0, el.selectionStart).length;
+}
+var running = false;
+
+function runIT() {
+  if (running) {
+    document.getElementById("gt").innerHTML = "▼";
+    document.getElementById("oBar").style.display = "none";
+    running = false;
+  } else {
+    editor = document.getElementById("textINP");
+    var outp = document.getElementById("textINP").innerHTML;
+    outp = outp.replaceAll("@", "//tempLineBreak//");
+    outp = outp.replaceAll("<br>", "//tempLineBreak//");
+    outp = stripHtml(outp);
+    outp = outp.replaceAll("//tempLineBreak//", "@");
+    document.getElementById("output").innerHTML = outp;
+    document.getElementById("gt").innerHTML = "🟥";
+    document.getElementById("oBar").style.display = "block";
+    running = true;
+  }
+}
+var bef = "e";
+$('#cmd').keypress(function(e) {
+  var key = e.key;
+  if (key == "Enter") {
+    send();
+  } else if (key == "ArrowUp") {
+    document.getElementById("cmd").value = "bef";
+    console.log("h");
+  }
+});
+
+
+function send() {
+  if (running) {
+    runIT();
+  } else {
+    document.getElementById("textINP").innerHTML = document.getElementById("textINP").innerHTML + document.getElementById("cmd").value;
+    var cmd = document.getElementById("cmd").value;
+    bef = cmd;
+    document.getElementById("cmd").value = "";
+    var resp;
+
+
+    if (cmd.includes("help")) {
+      resp = "[=  Help:  =]<br><br>Console GUI commands:<br>- expr (Compiles the console in GUI)<br>- decss (Removes CSS)<br><br>Normal commands:<br>- time (Gets time)<br>- clear (Clears the console)";
+    } else if (cmd.includes("decss")) {
+      document.getElementById("css").innerHTML = "";
+      resp = '> Removed all CSS from console GUI.';
+    } else if (cmd.includes("clear")) {
+      document.getElementById("textINP").innerHTML = "";
+      resp = '> Cleared the console.';
+    } else if (cmd.includes("time")) {
+      var d = new Date();
+      resp = '> Time: its ' + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    } else if (cmd.includes("expr")) {
+      runIT();
+      resp = '> Export done. In the GUI, tap the red square to close.';
+    } else if (cmd.includes("cl")) {
+        write("{ CloudENV }");
+        setTimeout(function(){ write("Conected"); setTimeout(function(){ write("Waiting for response from nodecraft.ga:3456/ws/api/"); setTimeout(function(){ write("Sent request to no1.extragon.ga/");  }, 1500); }, 90); }, 130);
+        setTimeout(function(){ write("<br><span style='color: #50adda;'>{ Server response; }</span><br>1*  Thanks for using ExtraGon.<br>2*  Your project password is [ <b>egvm785967</b> ]<br>3*  Please, keep that in safe place to be able to log in.<br>4*  Do not share this password.<br>"); setTimeout(function(){ write("Cloud operation sucessfull.<br>anonymous@lstcon.con | >"); }, 90); }, 3000);
+    } else {
+      resp = '> Unknown command "' + cmd + '"';
+    }
+    if (cmd.includes("cl")) {
+    } else {
+    document.getElementById("textINP").innerHTML = document.getElementById("textINP").innerHTML + "<br>" + resp + "<br>anonymous@lstcon.con | >";
+    scroll(0, 9999999999999);
+    LShighlight();
+    }
+
+  }
+}
+function write(text) {
+    document.getElementById("textINP").innerHTML = document.getElementById("textINP").innerHTML + "<br>" + text;
+    scroll(0, 9999999999999);
+    LShighlight();
+}
+</script>

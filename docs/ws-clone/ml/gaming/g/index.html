@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<title class="w-title">LSTV | Gaming | Loading...</title>
+<?php include '../base.html' ?>
+<div id="header"><img width="25" style="margin-right: 20px;" height="25" src="../ic-o.png"> <b>LSTV</b>Gaming</div>
+<div class="gtop">
+<div class="centeredH"><img width="140" height="140" src="" class="gi"></div>
+<div class="centeredH"><h1 class="gn">...</h1></div>
+<div class="centeredH ga">loading</div>
+<style>a{color:white}</style><b class="br 6"></b>
+<div class="stats-d"></div>
+</div>
+
+<script>
+const urlParams=new URLSearchParams(window.location.search);
+var g=urlParams.get('g'),cp,gl,st;
+if(g==null){alert("You have not specified any game id in the url parameters. Try ?g=");window.location.replace("https://www.lstv.ml/gaming/")}else{
+
+sendRequestTo("/gaming/data/gl.json", 'gl-save');
+function onRequestErrorResponse(error, tag){
+fetchSucess=false;
+alert("Error: Failed to fetch your data API\n\nWhat does it mean? Something somewhere failed when loading game list etc., try again later.");}
+function onRequestResponseRecived(response, tag){
+if(fetchSucess){
+if(tag==="gl-save"){console.log("Response from data API retrived sucessfully! Checking...");try{gl=JSON.parse(response);console.log("Check sucessfull! Data have been recived.");console.log(gl);load();}catch(e){console.error("Check failed - recived invalid data!\nError: "+e+"\n\nOriginal: "+response);}}else if(tag==="stats-api"){
+try{st=JSON.parse(response);console.log("Check sucessfull! Data have been recived.");console.log(st);loadSt();}catch(e){console.error("Check failed - recived invalid data!\nError: "+e+"\n\nOriginal: "+response);}}}}
+
+function load(){
+var stop=false;
+for (var i=0; i < gl.list.length; i++) {
+if(stop){}{
+if(gl.list[i].id===g){
+stop=true;
+cp=i;
+el(".gtop").style="background-image:url('../api/static/banners/"+g+".png')";
+el(".gn").innerHTML=gl.list[i].name;
+el(".ga").innerHTML="<a href='https://www.lstv.ml/gaming/u?id="+gl.list[i]["by-id"]+"'>By "+gl.list[i].by+"</a>";
+el(".gi").src="../api/static/icons/"+g+".png";
+el(".w-title").innerHTML="LSTV | "+gl.list[i].name
+if(gl.list[i]["stats-integrate"]){sendRequestTo("https://lstv.ml/gaming/api/stats/?g="+gl.list[i].id, 'stats-api');}else{el(".stats-d").style.display=none;}
+}else{
+if(i===gl.list.length-1){alert("Game with ID of "+g+" was not found.\nIf you are sure its right, try refreshing.");window.location.replace("https://www.lstv.ml/gaming/");}
+}}}}
+function loadSt(){
+el(".stats-d").innerHTML="";
+if(st[gl.list[cp]["stats-path"]]==undefined){el(".stats-d").style.display=none;/*TODO: When the stats path is invalid*/}else{
+    for (var i=0; i < st[gl.list[cp]["stats-path"]].length; i++) {
+        el(".stats-d").innerHTML=el(".stats-d").innerHTML+``+st[gl.list[cp]["stats-path"]][i].name+``;
+    }
+}
+}
+brAuto();
+}
+</script>
+<ul class="box-area"><li data-aos="fade-right"></li><li></li><li></li><li></li><li></li><li data-aos="fade-right"></li></ul><b></b>
+</body></html>

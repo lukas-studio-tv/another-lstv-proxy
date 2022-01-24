@@ -1,0 +1,60 @@
+   <style>
+       body {
+  font-family: 'Montserrat', sans-serif;
+}
+div.selectionbar {
+}
+div.selectionbar#bkg {
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+  border-radius: 10px;
+  background-color: #ededed;
+  padding: 20px;
+  left: 20%;
+  top: 40%;
+  position: fixed;
+  width: 50%;
+}
+div.selectionbar#selbkg {
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+  border-radius: 15px;
+  background-color: #b3b3b3;
+  padding: 17px;
+  left: 50%;
+  top: 50%;
+}
+div.selectionbar#sel {
+  border-radius: 15px;
+  background-color: #828282;
+  display: inline;
+  padding: 5px;
+  width: 100%;
+  cursor: pointer;
+  margin: 5px;
+  animation: btnHoverOUT 0.5s;
+}
+div.selectionbar#sel:hover {
+background-color: #5e5e5e;
+animation: btnHover 0.5s;
+box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+@keyframes Hover {
+  0%   {background-color: #3c64bd;}
+  100% {background-color: #6997ff;}
+}
+@keyframes HoverOUT {
+  0%   {background-color: #6997ff;}
+  100% {background-color: #3c64bd;}
+}
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<div id="bkg" class="selectionbar">
+<h2 class="t279475">
+Select domain ending:
+</h2>
+<div id="selbkg" class="selectionbar">
+<div id="sel" class="selectionbar">.tk</div>
+<div id="sel" class="selectionbar">.ml</div>
+<div id="sel" class="selectionbar">.ga</div>
+</div>
+</div>

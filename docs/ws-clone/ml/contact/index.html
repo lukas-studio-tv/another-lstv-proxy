@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Webhook Sender BETA</title>
+  </head>
+  <div class="box">
+  <h1>
+  Webhook sender BETA - By LSTV
+  </h1>
+    <input id="url" placeholder="Hook URL"><br>
+    <input id="name" placeholder="Hook name"><br>
+    <input id="pfp" placeholder="Hook profile pic"><br>
+    <input id="text" placeholder="Hook message"><br>
+
+    <body>
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="loadPR()" class="f">Load profile</button>
+      <button onclick="savePR()" class="f">Save profile</button>
+    </body>
+  </div>
+
+</html>
+<script>
+function sendMessage() {
+  var whurl = document.getElementById("url").value;
+  var request = new XMLHttpRequest();
+  request.open("POST", whurl);
+
+  request.setRequestHeader('Content-type', 'application/json');
+  var whtext = document.getElementById("text").value;
+  var wname = document.getElementById("name").value;
+  var wavatar = document.getElementById("pfp").value;
+  var params = {
+    username: wname,
+    avatar_url: wavatar,
+    content: whtext
+  }
+
+  request.send(JSON.stringify(params));
+}
+
+function loadPR() {
+  var profile = prompt("Paste your saved profile here:", "");
+  if (profile != null) {
+    profile = profile.replaceAll('[profiledata]//', '');
+    var arrprof = profile.split('.%n.');
+    document.getElementById("url").value = arrprof[0];
+    document.getElementById("name").value = arrprof[1];
+    document.getElementById("pfp").value = arrprof[2];
+    document.getElementById("text").value = arrprof[3];
+  }
+}
+
+function savePR() {
+  var sprofile = "[profiledata]//" + document.getElementById("url").value.concat('.%n.', document.getElementById("name").value);
+  var sprofile = sprofile.concat(".%n.", document.getElementById("pfp").value, '.%n.');
+  var sprofile = sprofile.concat(document.getElementById("text").value);
+  prompt("Profile saved, copy the code bellow:", sprofile);
+}
+</script>
+<style>
+input {
+ outline: none;
+ margin: 5px;
+ border-radius: 5px;
+ border: 3px solid #93a5c0;
+ padding: 8px;
+ font-family: 'Lato', sans-serif;
+ width: 95%;
+ text-align: center;
+ transition: 0.2s;
+}
+
+input:focus {
+  border: 3px solid #266eda;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+    max-width: 500px;
+  margin: auto;
+}
+
+button {
+  font-family: 'Lato', sans-serif;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  margin: 5px;
+  width: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+  color: white;
+  background: #5378b1;
+}
+
+.f {
+  width: 40%;
+}
+
+button:hover {
+  border-radius: 10px;
+  background: #266eda;
+}
+
+.box {
+  width: 300px;
+  text-align: center;
+  margin-left: 70px;
+  
+}
+</style>

@@ -1,0 +1,8 @@
+AddType application/x-httpd-php .htm .html .online
+ErrorDocument 500     /s/errors/500.html
+ErrorDocument 404     /s/errors/404.html
+ErrorDocument 403     /s/errors/403.html
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin http://lstv.ml
+</IfModule>

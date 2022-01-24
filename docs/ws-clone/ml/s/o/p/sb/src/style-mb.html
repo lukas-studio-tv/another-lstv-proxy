@@ -1,0 +1,251 @@
+<style>
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #FFFFFF; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+    body {
+        font-family: Verdana, Geneva, sans-serif;
+        scroll-behavior: smooth;
+    }
+
+    button {
+        background-image: linear-gradient(to right, #0091ff, #45afff);
+        color: #FFFFFF;
+        border-radius: 20px;
+        padding: 0.5em 1em;
+        border: 0px solid #ffc107;
+    }
+
+    #b2 {
+        background-image: linear-gradient(to right, #f56942, #f5ad42);
+    }
+
+    button:hover {
+        background-image: linear-gradient(to right, #45afff, #0091ff);
+    }
+
+    #b2:hover {
+        background-image: linear-gradient(to right, #f5ad42, #f56942);
+    }
+
+    button:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    #menu_bt {
+        font-size: 120%;
+        background-color: #000000;
+        opacity: 0.7;
+    }
+
+    .header {
+        background-image: linear-gradient(to right, #0091ff, #45afff);
+        box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+        color: #FFFFFF;
+        font-size: 25px;
+        text-align: left;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: center;
+        width: 100%;
+    }
+
+    #header_b {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    #header_i {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        align: center;
+        padding: 7px 8px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    #header_b:hover {
+        background: #ddd;
+        color: black;
+    }
+
+    #title_p {
+        font-weight: 900;
+        font-size: 25px;
+    }
+
+    #header_i:hover {
+        background: #0091ff;
+        color: black;
+    }
+
+    .top {
+        margin: auto;
+        width: 40%;
+        text-align: center;
+    }
+
+    .left {
+        padding: 5px 70px;
+        margin: left;
+        width: 70%;
+        text-align: left;
+    }
+
+    #title {
+        font-size: 50px;
+    }
+
+    meta {
+        font-size: 5px;
+    }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-image: linear-gradient(to right, #0091ff, #45afff);
+}
+
+input:focus + .slider {
+  box-shadow: 1 1 3px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.form__group {
+	 position: relative;
+	 padding: 15px 0 0;
+	 margin-top: 10px;
+	 width: 50%;
+}
+
+ .form__field {
+	 font-family: inherit;
+	 width: 100%;
+	 border: 0;
+	 border-bottom: 2px solid #9b9b9b;
+	 outline: 0;
+	 font-size: 1.3rem;
+	 color: #000000;
+	 padding: 7px 0;
+	 background: transparent;
+	 transition: border-color 0.2s;
+}
+
+ .form__field::placeholder {
+	 color: transparent;
+}
+
+ .form__field:placeholder-shown ~ .form__label {
+	 font-size: 1.3rem;
+	 cursor: text;
+	 top: 20px;
+}
+
+ .form__label {
+	 position: absolute;
+	 top: 0;
+	 display: block;
+	 transition: 0.2s;
+	 font-size: 1rem;
+	 color: #45afff;
+}
+
+ .form__field:focus {
+	 padding-bottom: 6px;
+	 font-weight: 700;
+	 border-width: 3px;
+	 border-image: linear-gradient(to right, #45afff, #0879cf);
+	 border-image-slice: 1;
+}
+
+ .form__field:focus ~ .form__label {
+	 position: absolute;
+	 top: 0;
+	 display: block;
+	 transition: 0.2s;
+	 font-size: 1rem;
+	 color: #45afff;
+	 font-weight: 700;
+}
+
+body {
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	 align-items: center;
+	 min-height: 100vh;
+	 font-size: 1.5rem;
+}
+</style>

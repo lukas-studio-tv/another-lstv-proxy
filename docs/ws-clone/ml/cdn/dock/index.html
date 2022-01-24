@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<h1>Upload file to LSTV public file directory</h1>
+<div class="dropzone" onclick="input.click()">Drag and drop files here<br>(Or click here to select)<br><span id="filename"></span></div><br>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+  <input type="file" name="fileToUpload" id="fileToUpload">
+  <input type="submit" value="Upload" name="submit" id="fileUpload">
+</form>
+<br><br><br>
+Command for <a href="https://lstv.ml/link/l?u=-sslwww.lstv.ml/cdn/console?c=cl%20cdn%20upload%20(U:file)%20?u=dock_G_file=(file.open(_ask).uri)">LSTV Cloud console;</a><br><br>
+<div class="prev">cl cdn upload (U:file) ?u=dock&file=(file.open(_ask).uri)</div>
+<style>
+body {
+  background: #22262e;
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+  padding-bottom: 84px;
+  text-align: center;
+}
+.prev {
+    background: #363c47;
+    padding: 10px;
+    border-radius: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+input[type="file"] {display: none;}
+input#fileUpload {
+      border: none;
+  border-radius: 10px;
+  color: white;
+  background: #1d2024;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  padding: 12px;
+  cursor: pointer;
+}
+input#fileToUpload {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #1d2024;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+  cursor: pointer;
+    padding: 10px;
+}
+.dropzone {
+cursor:pointer;
+padding:50px;
+display:block;
+background:rgba(255, 255, 255, 0.1);
+border:3px dashed rgba(255, 255, 255, 0.4);
+border-radius:20px;
+transition-duration:0.2s;
+}
+.dropzone.dragover, .dropzone:hover {
+border: 3px dashed rgba(255, 255, 255, 0.7);
+background: rgba(255, 255, 255, 0.4);
+}
+</style>
+</body>
+</html>
+<script>
+function makeid(length) {
+   var result           = '';
+   var characters       = '.ABCDEFGHIJKLMNOPQRTUVWXYZa.bcdefghijklmnopqrstuvwxyz0123456789.';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
+
+var $dropzone = document.querySelector('.dropzone');
+var input = document.getElementById('fileToUpload');
+var fn = document.getElementById('filename');
+$dropzone.ondragover = function (e) { 
+  e.preventDefault(); 
+  this.classList.add('dragover');
+};
+$dropzone.ondragleave = function (e) { 
+    e.preventDefault();
+    this.classList.remove('dragover');
+};
+$dropzone.ondrop = function (e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    input.files = e.dataTransfer.files;
+    fn.innerHTML=input.files[0].name;
+}
+</script>

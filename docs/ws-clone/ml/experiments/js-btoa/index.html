@@ -1,0 +1,42 @@
+<br><h2>JavaScript B64 auto-encoder</h2><br>
+<textarea placeholder="Place JS here" contenteditable="false"></textarea><br>
+<button onclick="fromTag('textarea',1)" class="d">Encode</button><br>
+<button onclick="fromTag('textarea',3)" class="d">Encode 3x</button><br>
+<button onclick="fromTag('textarea',prompt('Enter how many times to encode:'))" class="d">Custom</button>
+<button onclick="back()" class="b">Back</button>
+<title>JSBTOA</title>
+<style>
+	body{text-align:center;}
+	textarea,button{border-radius:5px;outline:none;padding:7px;resize:none;width:100%;height:500px;}
+	button{height:40px;border:1px gray solid;}
+</style>
+<script>
+    $(".b")[0].style.display="none";
+	function $(s) {
+		return document.querySelectorAll(s)}
+    var prev,ta;
+    function fromTag(e,num) {
+        if(num<21){
+        if(num<11){}else{alert("WARNING: high numbers with more code may lag or even freeze your browser and are not recomended.\nDo at your own risk.")}
+        ta=e;
+        prev=$(e)[0].value;
+        for(let i=0;i<num;i++){
+		$(e)[0].value = encodeJS($(e)[0].value)}
+        $(e)[0].disabled = true;
+        for(let i=0;i<$(".d").length;i++){
+            $(".d")[i].style.display="none";
+        }
+        $(".b")[0].style.display="inline-block";
+        }else{alert("Max encoding is 20")}
+        }
+    function back(){
+        $(ta)[0].value=prev;
+        for(let i=0;i<$(".d").length;i++){
+            $(".d")[i].style.display="inline-block";
+        }$(".b")[0].style.display="none";
+        $(ta)[0].disabled = false;
+    }
+	/The main function/
+	function encodeJS(t) {
+		return eval(atob('YGV2YWwoYXRvYihcYGArYnRvYSh0KStgXGApKTtg'))}
+</script>

@@ -1,0 +1,295 @@
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+div.header {
+  background: none;
+  color: #fff;
+  user-select: none;
+  z-index: 5;
+}
+
+.header.item {
+  cursor: pointer;
+  text-align: right;
+  float: right;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.header.item:hover {
+  opacity: 60%;
+}
+
+
+@keyframes header_an_1 {
+  0% {
+    background: none;
+    color: #fff;
+  }
+
+  100% {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes header_an_2 {
+  0% {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+  }
+
+  100% {
+    background: none;
+    color: #fff;
+  }
+}
+
+@keyframes headerDOWN_an_1 {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes headerDOWN_an_2 {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+.header.placeholder::before {
+  /* Adds an right margin for the header. */
+  float: right;
+  content: "ㅤㅤㅤ";
+}
+
+.headerimage {
+  background-image: url("https://www.minecraftbot.com/img/landing-background.png");
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  background-size: cover;
+}
+
+.headertext {
+  text-align: center;
+}
+
+h1 {
+  margin: 0px;
+}
+
+.headerdown {
+  bottom: 0px;
+  position: absolute;
+  cursor: pointer;
+  transform: translateX(-20px);
+}
+
+/* DEMO */
+
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0px;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding-left: none;
+  background: #262626;
+}
+
+.eB {
+  margin: 0px;
+  padding-left: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #262626;
+}
+
+footer {
+  background: #1f1f1f;
+  color: #fff;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  padding: 10px;
+  padding-left: 30px;
+  padding-bottom: 29px;
+}
+
+.cardcontainer {
+  display: grid;
+  grid-template-columns: 33.2% 33.2% 33.2%;
+}
+
+.card {
+  height: 315px;
+  background: #f0f0f0;
+  margin: 8px;
+  border-radius: 15px;
+  animation: cardHOVEROut 0.5s forwards;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 30px;
+}
+
+.card:hover {
+  background: #dedede;
+  cursor: pointer;
+  animation: cardHOVER 0.5s forwards;
+}
+
+@keyframes cardHOVER {
+  0% {
+    opacity: 90%;
+    background: #262626;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 100%;
+    background: #dedede;
+    transform: translateY(-2%);
+    border-radius: 20px;
+  }
+}
+
+@keyframes cardHOVEROut {
+  0% {
+    opacity: 100%;
+    background: #dedede;
+    transform: translateY(-2%);
+  }
+
+  100% {
+    opacity: 90%;
+    background: #262626;
+    transform: translateY(0%);
+  }
+}
+
+button {
+  margin: 10px;
+  clear: both;
+  margin-top: auto;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+ background: #262626;
+  color: #fff;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  cursor: pointer;
+  animation: buttonHWOut 0.2s forwards;
+  -webkit-box-shadow: 0px 0px 8px -1px rgba(0, 149, 255, 1);
+  -moz-box-shadow: 0px 0px 8px -1px rgba(0, 149, 255, 1);
+  box-shadow: 0px 0px 8px -1px rgba(0, 149, 255, 1);
+}
+
+button:hover {
+  animation: buttonHW 0.2s forwards;
+}
+
+@keyframes buttonHWOut {
+  0% {
+    border-radius: 1px;
+    opacity: 100%;
+  }
+
+  100% {
+    border-radius: 15px;
+    opacity: 90%;
+  }
+}
+
+@keyframes buttonHW {
+  0% {
+    border-radius: 15px;
+    opacity: 90%;
+  }
+
+  100% {
+    border-radius: 5px;
+    opacity: 100%;
+  }
+}
+
+.listVAL {
+  width: 93%;
+  height: 50px;
+  margin: 10px;
+  float: left;
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  border-radius: 15px;
+  padding: 15px;
+  white-space: pre-line;
+  cursor: pointer;
+  animation: cardHOVEROut 0.5s forwards;
+  margin-bottom: 10px;
+}
+.listVAL:hover {
+  animation: cardHOVER 0.5s forwards;
+}
+.listIMG {
+  margin-right: 20px;
+}
+.tx {
+  text-align: center;
+  width: 100%;
+}
+.red {
+  background: #ed5c5c;
+  color: white;
+}
+.listWAR {
+  width: 93%;
+  height: 50px;
+  margin: 10px;
+  float: left;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+}

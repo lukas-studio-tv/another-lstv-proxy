@@ -1,0 +1,29 @@
+<body>
+<h1>CloudAccess Client</h1>
+<h2>Free online C.A.Client service for scratch</h2>
+<div class="fs"><code id="con"></code></div><title>CloudAccess Client</title>
+<style>
+body {
+    font-family: Consolas,"courier new";
+      max-width: 500px;
+  margin: auto;
+    text-algin: center;
+}
+code {
+  font-family: Consolas,"courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+  width: 100%;
+    text-algin: center;
+}
+.fs {
+    width: 100%;
+      font-size: 105%;
+  width: 100%;
+  text-algin: center;
+}
+</style><br><br>
+<iframe src="https://scratch.mit.edu/projects/445217779/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+</body>

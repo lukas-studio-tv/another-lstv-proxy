@@ -1,0 +1,1 @@
+<a class="gradient-button gradient-button-4" href="cns.php">Enter via redirecting page</a>
