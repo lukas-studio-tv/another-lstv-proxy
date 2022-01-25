@@ -10,6 +10,7 @@
   </head>
   <body>
     <h1>Enter original url</h1>
+    <h3>Enter lstv.ml (or other lstv domain) URL that previously worked to get a link<br>to it's last state.</h3>
     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Original LSTV URL, like https://lstv.ml/"><br>
     <input disabled type="text" class="form-control" id="output-url" aria-describedby="basic-addon3" placeholder="Temporary URL will be outputed here">
     <button onclick="convert();copy(c);" class="btn btn-primary d" type="button">Copy <i class="bi bi-clipboard"></i></button>
@@ -37,6 +38,7 @@
         .replaceAll(/ps\.lstv\.ml|pstudio\.ga/gi,"ps")
         .replaceAll(/\/cdn\/dock/gi,"/cdn/dock-snapshot-12422")
         .replaceAll(/\/dock-snapshot-12422\/uploads/gi,"/dock-snapshot-12422/uploaded-raw-content")
+        .replaceAll(/\.js/gi,".js?lt="+String(window.performance.timing.loadEventEnd-window.performance.timing.navigationStart))/*Simulate previous log format on the cdn uploads*/
         .replaceAll(/lstv\.ml|lstv\.gq/gi,"ml");
         o.value="https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/"+o.value;
         c.innerHTML=o.value;
