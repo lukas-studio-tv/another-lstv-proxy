@@ -1,26 +1,49 @@
 /*
 Based on SheepTester's Utilities plugin.
+Tested on TurboWarp.
+Made by LSTV | License MIT
+Verzion: 2.23.7 (1.6 2022)
+First update: 1/12/2021
 
 List of changes made:
-- Rewritten to work as unsandboxed plugin (Allowing access to window and runtime)
+- Rewritten to work as unsandboxed plugin (Allowing access to window and vm)
   (That means that you now have to use ?plugin_load=url in SheepTester's GUI, or paste this code to console to load into different mods.)
-- Added blocks;
-    - String (Plain string)
-	- consoleLog
-	- ProjectLocationURL
-	- Set/Get temporary variable
-	- Show/Hide cursor
-	- Custom CSS (Set directly in element/edit style)
-	- Eval (beta) (Runs JS) (Experimental)
-	- requestOpenFile (Shows text file upload alert, then returns its data to 'fileResult'. Supports setting custom CSS)
-	    - outputs "Open failed." when unsucessfull
+  (Or use my TurboWarp plugin loader UI, that constains this and more extensions in presets and auto updates.)
+
+- Added blocks (cca 22);
+	Basic blocks;
+    - String (Just returns whatewer you put in. Usefull only to make your code smaller and cleaner.)
+	- isValidJson (Boolean that returns true if the JSON entered is valid.)
+	- consoleLog (Logs something to conosle. Supports info/error/warning/aHTXAPI. aHTXAPI is used to comunicate between Android app and HTML.)
+	- ProjectLocationURL (Gets the current URL)
+	- Set/Get temporary variable (Returns/Changes a temporary variable)
+	- setCursor (Changes cursor. none= hidden, auto= visible and so on. Can be used for importing custom cursors from data URI.)
+	- Custom CSS (Adds CSS style. Not very usefull in most cases.)
+	- Eval (Runs JavaScript. Returns errors to "last eval/js error")
+	- EvalString (Runs as JS function and returns the output. (example: return 'hi' returns hi.) Returns errors to "last eval/js error")
+	- last eval/js error (When an error occurs in eval block, it gets written here.)
+	
+	File blocks;
+	- requestOpenFile (Shows text file upload dialog, then returns its data to 'fileResult'. Supports setting custom CSS)
 		- fully customizable
-		- should deal with large files fast
-		- dosen't support binary files.
-	- fileResult (The result from requestOpenFile)
+	- openFile (Opens file picker. Returns it's text content)
+	- openFileData (Opens file picker, then converts the content to data URI - so it can be used to import images, audio, etc.)
+	- fileResult (The file result)
+	  + you can select wich files to allow - for example image/* only allows image files.
+	- fileName (The name of the picked file)
 	- downloadFile (Tries to download a file with content and name (example: 'hi', 'hi.txt'))
-	- customInputBox (Custom box for entering values) DEV
-	- loadSprite (Loads a .sprite3 file from external file) DEV EXPERIMENTAL]
+	
+	Runtime blocks:
+	- greenFlag (Calls the green flag.)
+	- setUsername (Changes the username.)
+	
+	[EXPERIMENTAL] Costume blocks:
+	Introduction: these temporarily update costume of a sprite to something you choose. If you draw on that costume in the editor, it reverts back to the 
+	original sprite. The "Sprite" is the number of the sprite you want to update on. 0 is stage, 1 is the first sprite on the list and so on.
+	The "Costume" number is the costume number-1 (0 is the first costume in the sprite.)
+	- setSvg (Allows to set the SVG of a costume. Only for experienced people who know what are they doing.)
+	- setImage (Displays image from a data URI. You can set the image scale and blur effect. To draw an image from a file selected by user, use openFileData block and then set the data URI to fileResult.)
+	- renderText (Uses SVG to render text on a costume. You can set custom font, color, size. Only use if you know how, this block may be really tricky.)
 */
 
 /* ICONS: https://fontawesome.com/license */
@@ -40,7 +63,8 @@ var temp_var_1='',
   utl2CustomCSS = document.createElement("style"),
   utl2OwnCSS = document.createElement("style"),
   utl2OpenFileDialog = document.createElement("div"),
-  u2_file_loaded="Nothing opened yet";
+  utl2_evalerr="",
+  u2_file_loaded="Nothing opened yet",
   u2_file_name="Nothing opened yet";
 utl2CustomCSS.id="u2customCSS";
 utl2OpenFileDialog.id="u2_open_filter";
@@ -233,6 +257,17 @@ class Utilities {
           }
         },
         {
+          "opcode": 'utl2_isValidJson',
+          "blockType": "Boolean",
+          "text": 'is valid json [json]',
+          "arguments": {
+            "json": {
+              "type": "string",
+              "defaultValue": '{}'
+            }
+          }
+        },
+        {
           "opcode": 'stringToBoolean',
 
           "blockType": "Boolean",
@@ -294,16 +329,15 @@ class Utilities {
 
           "blockType": "command",
 
-          "text": 'setTemporaryVariable [eventType] to [STRING]',
+          "text": 'setVariable [eventType] to [STRING]',
           "arguments": {
             "STRING": {
               "type": "string",
               "defaultValue": 'apple'
             },
             "eventType": {
-              "type": "number",
-              "defaultValue": '1',
-              "menu": "tvarsMenu"
+              "type": "string",
+              "defaultValue": '1'
             }
           },
         },
@@ -312,12 +346,11 @@ class Utilities {
 
           "blockType": "reporter",
 
-          "text": 'getTemporaryVariable [eventType]',
+          "text": 'getVariable [eventType]',
           "arguments": {
 			"eventType": {
-              "type": "number",
-              "defaultValue": '1',
-              "menu": "tvarsMenu"
+              "type": "string",
+              "defaultValue": '1'
             }
 		  }
         },
@@ -367,7 +400,7 @@ class Utilities {
 		{
           "opcode": 'utl2eval',
           "blockType": "command",
-          "text": 'run JS [STRING]',
+          "text": 'JS [STRING]',
           "arguments": {
 			"STRING": {
               "type": "string",
@@ -376,9 +409,15 @@ class Utilities {
 		  }
         },
 		{
+          "opcode": 'utl2evalerror',
+          "blockType": "reporter",
+          "text": 'last eval/js error',
+          "arguments": {}
+        },
+		{
           "opcode": 'requestOpenFile',
           "blockType": "command",
-          "text": 'openFileDialog | title: [A] custom CSS (optional): [B] | (Only text)',
+          "text": 'openFileDialog | title: [A] CSS (optional): [B] | (as text) | accept files: [ALW]',
 		  "blockIconURI": icon_openfile,
           "arguments": {
 			"A": {
@@ -388,6 +427,10 @@ class Utilities {
 			"B": {
               "type": "string",
               "defaultValue": ''
+            },
+			"ALW": {
+              "type": "string",
+              "defaultValue": ''
             }
 		  }
         },
@@ -395,14 +438,19 @@ class Utilities {
           "opcode": 'openFile',
 		  "blockIconURI": icon_openfile,
           "blockType": "command",
-          "text": 'openFile | (Only text)',
-          "arguments": {}
+          "text": 'openFile | (as text) | accept files: [ALW]',
+          "arguments": {
+			"ALW": {
+              "type": "string",
+              "defaultValue": ''
+            }
+		  }
         },
 		{
           "opcode": 'openFileData',
 		  "blockIconURI": icon_openfile,
           "blockType": "command",
-          "text": 'openDataFile | (to data URI) | accept files: [ALW]',
+          "text": 'openFile | (as data URI) | accept files: [ALW]',
           "arguments": {
 			"ALW": {
               "type": "string",
@@ -446,6 +494,93 @@ class Utilities {
 			"username": {
               "type": "string",
               "defaultValue": 'Jon'
+            }
+		  }
+        },
+		{
+          "opcode": 'utl2_greenFlag',
+          "blockType": "command",
+          "text": 'greenFlag',
+          "arguments": {}
+        },
+		{
+          "opcode": 'utl2_setSVG',
+          "blockType": "command",
+          "text": 'EXPERIMENTAL: set svg for sprite n. [t] costume n. [c] svg [svg]',
+          "arguments": {
+			"t": {
+              "type": "string",
+              "defaultValue": '1'
+            },
+			"c": {
+              "type": "string",
+              "defaultValue": '0'
+            },
+			"svg": {
+              "type": "string",
+              "defaultValue": '<svg></svg>'
+            }
+		  }
+        },
+		{
+          "opcode": 'utl2_loadIMG',
+          "blockType": "command",
+          "text": 'EXPERIMENTAL: set image for sprite n. [t] costume n. [c] from data URI/link [uri] size [size] blur effect [blurfx]',
+          "arguments": {
+			"t": {
+              "type": "string",
+              "defaultValue": '1'
+            },
+			"c": {
+              "type": "string",
+              "defaultValue": '0'
+            },
+			"uri": {
+              "type": "string",
+              "defaultValue": 'uri'
+            },
+			"size": {
+              "type": "string",
+              "defaultValue": '150'
+            },
+			"blurfx": {
+              "type": "string",
+              "defaultValue": '0'
+            }
+		  }
+        },
+		{
+          "opcode": 'utl2_showText',
+          "blockType": "command",
+          "text": 'EXPERIMENTAL: render text on sprite n. [t] costume index [c] text [text] color [co] size [sz] font family [f] | custom font (read http://i--i.cf/l/s1) [cf]',
+          "arguments": {
+			"t": {
+              "type": "string",
+              "defaultValue": '1'
+            },
+			"c": {
+              "type": "string",
+              "defaultValue": '0'
+            },
+			"text": {
+              "type": "string",
+              "defaultValue": 'Hello'
+            },
+			"co": {
+              "type": "string",
+              "defaultValue": '#000000'
+            },
+			"sz": {
+              "type": "string",
+              "defaultValue": '40'
+            },
+			"f": {
+              "type": "string",
+              "defaultValue": 'Sans Serif'
+            },
+			"cf": {
+              "type": "string",
+              "defaultValue": 'none'
             }
 		  }
         },
@@ -513,8 +648,7 @@ class Utilities {
   }
 
   fetchFrom({URL}) {
-    return fetch(URL).then(res => res.text())
-      .catch(err => '');
+    return fetch(URL).then(res => res.text()).catch(err => '');
   }
 
   parseJSON({PATH,JSON_STRING}) {
@@ -547,9 +681,11 @@ class Utilities {
   }
   
   evalString({STRING}) {
+	try{
     var utl2_theInstructions = STRING;
     var F=new Function (utl2_theInstructions);
     return(F());
+	}catch(e){utl2_evalerr=e;return utl2_evalerr;}
   }
 
   consoleLogString({STRING}) {
@@ -591,7 +727,8 @@ class Utilities {
   utl2loadCustomCSS({STRING}) {
     utl2CustomCSS.innerHTML=STRING;
   }
-  requestOpenFile({A,B}) {
+  requestOpenFile({A,B,ALW}) {
+	u2_el("u2_open_fu").accept=ALW;
 	u2_el("u2_open_title").innerHTML=A;
 	if(B.includes("u2_open_box")){utl2OwnCSS.innerHTML=B;}else{utl2OwnCSS.innerHTML=u2_open_dialog_defaultcss;}
 	u2_el("u2_fileform").reset();u2_el("win-filter").style.display="flex";u2_el("u2_open_box").style.display="flex";
@@ -606,7 +743,8 @@ class Utilities {
 	return u2_file_name;
 	}
   }
-  openFile() {
+  openFile({ALW}) {
+	u2_el("u2_open_fu").accept=ALW;
 	u2_el("u2_open_fu").click();
   }
   openFileData({ALW}) {
@@ -614,7 +752,9 @@ class Utilities {
 	u2_el("u2_data_open_fu").click();
   }
   utl2eval({STRING}) {
+	try{
 	eval(STRING);
+	}catch(e){utl2_evalerr=e}
   }
   utl2downloadFile({filename, text}) {
 	var element = document.createElement('a');
@@ -627,6 +767,43 @@ class Utilities {
   utl2changeUsername({username}) {
 	this.runtime.ioDevices.userData._username=username;
   }
+  utl2_greenFlag({username}) {
+	this.runtime["greenFlag"]()
+  }
+  utl2_isValidJson({json}) {
+	try{var validatethisjson=JSON.parse(json);return true;}catch(e){return false;}
+  }
+  utl2_setSVG({t,c,svg}) {
+	try{
+	properSetSVG(t,c,svg);
+	}catch(e){console.error(e)}
+  }
+  utl2_showText({t,c,text,co,f,cf,sz}) {
+	try{
+	var cfont="";
+	if(cf==="none"){}else{cfont="<style>"+cf+"</style>"}
+	properSetSVG(t, c, `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="608.54883" height="27.375" viewBox="0,0,608.54883,27.375">
+	<g transform="translate(-15.98013,-164.26875)">
+	<g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill="`+co+`" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="Sans Serif" font-weight="normal" font-size="40" text-anchor="start" style="mix-blend-mode: normal">`+cfont+`
+	<text transform="translate(16.23013,185.76875) scale(0.5,0.5)" font-size="`+sz+`" xml:space="preserve" fill="`+co+`" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="`+f+`" text-anchor="start" style="mix-blend-mode: normal">
+	<tspan x="0" dy="0">`+text+`</tspan></text></g></g></svg>`);
+	}catch(e){console.error(e)}
+  }
+  utl2_loadIMG({t,c,uri,size,blurfx}) {
+	try{properSetSVG(t, c, `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0,0,11,11" width="90" height="90"><defs><filter id="f1" x="0" y="0"><feGaussianBlur in="SourceGraphic" stdDeviation="`+blurfx+`"/></filter></defs><g><image filter="url(#f1)" width="`+size+`" height="`+size+`" transform="scale(1,1)" xlink:href="`+uri+`"/></g></svg>`);
+	}catch(e){console.error(e)}
+  }
+  utl2evalerror(){
+	return utl2_evalerr;
+  }
+}
+
+function properSetSVG(t, c, svg){
+const ps_sp=vm.runtime.targets[t];
+const ps_cs=ps_sp.sprite.costumes[c];
+vm.runtime.renderer.updateSVGSkin(ps_cs.skinId, svg);
+ps_cs.bitmapResolution = 1;
+vm.emitTargetsUpdate();
 }
 
 function u2_dataFileLoad(e){var a,n=e.target.files,t=new FileReader;t.onload=(a=n[0],function(e){
